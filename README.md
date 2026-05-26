@@ -12,16 +12,10 @@ AI做ppt已经非常常见了，那么既然都是AI做ppt了，那就让AI自�
 - 准备你的产品或想要介绍的素材，建议统一放入`assets/`文件夹下,按文件类型分类
 
   <image src="./demo/skill-assets.png" width="400" />
-  
+
 - 调用此技能，让AI（例如Trae）编写大纲、讲稿、规划ppt演讲时间安排等，建议使用Markdown格式，示例:`./demo/presentation.md`
 -
   <image src="./demo/skill-use.png" width="400" />
-
-### 快速开始
-
-#### 6-26 12:53:32.png) width="400" />
-
-### 快速开始
 
 #### 快速开始
 
@@ -111,6 +105,8 @@ python scripts/extract_frames.py
 在 `assets/config.json` 中配置 API Key，或通过环境变量 `DASHSCOPE_API_KEY` 设置。
 
 ## 示例视频
+
+示例录制视频：`demo/demo.mp4`
 
 <video src="demo/demo.mp4" controls width="100%" style="max-width:640px">
   您的浏览器不支持视频播放。
