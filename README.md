@@ -10,10 +10,12 @@ AI做ppt已经非常常见了，那么既然都是AI做ppt了，那就让AI自�
 ## 使用技巧
 
 - 准备你的产品或想要介绍的素材，建议统一放入`assets/`文件夹下,按文件类型分类
-  ![skill-assets](demo/skill-assets.png) width="400" />
+
+  <image src="./demo/skill-assets.png" width="400" />
+  
 - 调用此技能，让AI（例如Trae）编写大纲、讲稿、规划ppt演讲时间安排等，建议使用Markdown格式，示例:`./demo/presentation.md`
 -
-  ![skill-use](demo/skill-use.png) width="400" />
+  <image src="./demo/skill-use.png" width="400" />
 
 ### 快速开始
 
