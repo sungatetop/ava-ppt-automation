@@ -1,0 +1,4 @@
+{
+  "api_key": "YOUR_ALIBABA_CLOUD_BAILIAN_API_KEY",
+  "comment": "请在此输入您的阿里云百炼 API_KEY。如果不可用，程序将提示您在对话框中直接输入。"
+}

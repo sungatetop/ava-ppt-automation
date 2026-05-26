@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVA 自动化演示模板</title>
+    
+    <style>
+        /* ===========================================
+           VIEWPORT FITTING: MANDATORY BASE STYLES
+           确保每一页幻灯片完美适配视口高度，无滚动
+           =========================================== */
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            padding: var(--slide-padding);
+        }
+        :root {
+            --title-size: clamp(2rem, 6vw, 5rem);
+            --h2-size: clamp(1.5rem, 4vw, 3rem);
+            --body-size: clamp(0.9rem, 1.5vw, 1.25rem);
+            --small-size: clamp(0.75rem, 1vw, 1rem);
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(1rem, 3vw, 3rem);
+        }
+        img, video {
+            max-width: 100%;
+            max-height: min(60vh, 500px);
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .card {
+            max-width: min(90vw, 1200px);
+            max-height: min(80vh, 800px);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* === 主题变量 (根据 style_presets 配置) === */
+        :root {
+            --bg-primary: #0a0f1c;
+            --text-primary: #ffffff;
+            --accent: #00ffcc;
+            --font-display: 'Clash Display', sans-serif;
+            --font-body: 'Satoshi', sans-serif;
+        }
+
+        /* === 自动播放专属样式 === */
+        #auto-play-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #auto-play-btn:hover { transform: scale(1.05); }
+
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 4px;
+            background: var(--accent);
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* === 动画系统 === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .slide.active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <button id="auto-play-btn">▶ 自动演示</button>
+
+    <main id="presentation">
+        <!-- 示例 Slide -->
+        <section class="slide active" data-slide="1">
+            <div class="slide-content">
+                <h1 class="reveal">艾娃 · 自动化演示</h1>
+                <p class="reveal">让每一份文档都具备“驾驶”能力</p>
+            </div>
+        </section>
+        
+        <!-- 更多 Slide 将在此处生成 -->
+    </main>
+
+    <script>
+        class PresentationEngine {
+            constructor() {
+                this.audioPlayer = new Audio();
+                this.audioDir = 'assets/audio/';
+                this.slides = document.querySelectorAll('.slide');
+                this.progressBar = document.querySelector('.progress-bar');
+                
+                // 核心配置：视频页时长锁定
+                this.videoTimings = {
+                    /* 示例: 13: 36, 14: 43 */
+                };
+                
+                // 核心配置：章节与音频映射
+                this.playPlan = [
+                    /* 示例: { id: "section_1", slides: [1, 2], audio: "section_1.mp3" } */
+                ];
+
+                this.init();
+            }
+
+            init() {
+                document.getElementById('auto-play-btn').onclick = () => this.start();
+                // 键盘支持
+                document.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space') this.start();
+                });
+            }
+
+            async start() {
+                document.getElementById('auto-play-btn').style.display = 'none';
+                for (let i = 0; i < this.playPlan.length; i++) {
+                    await this.playSection(this.playPlan[i]);
+                }
+            }
+
+            async playSection(section) {
+                console.log(`播放章节: ${section.id}`);
+                this.audioPlayer.src = this.audioDir + section.audio;
+                
+                return new Promise((resolve) => {
+                    this.audioPlayer.onloadedmetadata = async () => {
+                        const audioInterval = this.audioPlayer.duration / section.slides.length;
+                        this.audioPlayer.play();
+                        
+                        for (let i = 0; i < section.slides.length; i++) {
+                            const slideNum = section.slides[i];
+                            this.updateSlide(slideNum);
+                            
+                            // 同步核心：取语音时长与视频锁定时间的最大值
+                            const duration = Math.max(audioInterval, this.videoTimings[slideNum] || 0);
+                            await new Promise(r => setTimeout(r, duration * 1000));
+                        }
+                        resolve();
+                    };
+                    this.audioPlayer.onerror = () => resolve();
+                });
+            }
+
+            updateSlide(num) {
+                this.slides.forEach(s => s.classList.remove('active'));
+                const target = document.querySelector(`[data-slide="${num}"]`);
+                if (target) target.classList.add('active');
+                
+                // 更新进度条
+                const progress = (num / this.slides.length) * 100;
+                this.progressBar.style.width = `${progress}%`;
+            }
+        }
+
+        window.onload = () => { new PresentationEngine(); };
+    </script>
+</body>
+</html>

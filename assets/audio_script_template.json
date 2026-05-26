@@ -1,0 +1,34 @@
+{
+    "config": {
+        "model": "cosyvoice-v1",
+        "voice": "longshuo",
+        "format": "mp3",
+        "sample_rate": 22050,
+        "volume": 50,
+        "speech_rate": 0,
+        "pitch_rate": 0
+    },
+    "sections": [
+        {
+            "id": "section_1",
+            "slides": "1-2",
+            "original_text": "Hello Ava, welcome to ScalingAgentLab.",
+            "synthesized_text": "你好 艾娃，欢迎来到 Scaling Agent Lab。",
+            "audio_file": "section_1.mp3",
+            "pronunciation_fixes": [
+                {"original": "Ava", "replaced_with": "艾娃", "reason": "中文发音更亲切"},
+                {"original": "ScalingAgentLab", "replaced_with": "Scaling Agent Lab", "reason": "拆分单词以纠正连读发音"}
+            ]
+        },
+        {
+            "id": "section_2_slide_3",
+            "slides": "3",
+            "original_text": "Ava is an AI-native agent.",
+            "synthesized_text": "艾娃 是一个 AI 原生智能体。",
+            "audio_file": "section_2_slide_3.mp3",
+            "pronunciation_fixes": [
+                {"original": "Ava", "replaced_with": "艾娃", "reason": "统一产品名称发音"}
+            ]
+        }
+    ]
+}
