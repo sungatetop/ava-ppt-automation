@@ -108,7 +108,11 @@ python scripts/extract_frames.py
 
 示例录制视频：`demo/demo.mp4`
 
-https://github.com/user-attachments/assets/fab2e93b-d173-4400-b24d-52f9381ee90a
+
+
+https://github.com/user-attachments/assets/8ebdfcf0-59c7-40f4-b07d-faf55e5b9b5b
+
+
 
 
 
