@@ -108,9 +108,11 @@ python scripts/extract_frames.py
 
 示例录制视频：`demo/demo.mp4`
 
-<video src="demo/demo.mp4" controls width="100%" style="max-width:640px">
-  您的浏览器不支持视频播放。
-</video>
+https://github.com/user-attachments/assets/fab2e93b-d173-4400-b24d-52f9381ee90a
+
+
+
+
 
 ## 许可证
 
